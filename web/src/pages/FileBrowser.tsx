@@ -5,7 +5,8 @@ const DocsPage = () => {
   return (
     <div className={"flex flex-col justify-center items-center"}>
       <FileBrowserTitle/>
-      <FileTable/>
+      <div className={"w-full"}>
+        <FileTable/></div>
     </div>
   );
 };

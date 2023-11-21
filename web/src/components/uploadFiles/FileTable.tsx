@@ -1,73 +1,81 @@
 import React from 'react';
-import { Space, Table, Tag } from 'antd';
-import type { ColumnsType } from 'antd/es/table';
+import { message, Space, Table, Tag } from 'antd';
+import { ProTable } from "@ant-design/pro-table";
+import type { ProColumns } from '@ant-design/pro-components';
 
 interface DataType {
   key: string;
   name: string;
-  age: number;
-  address: string;
-  tags: string[];
+  location: string;
+  size: number;
+  uploadTime: Date;
 }
 
-const columns: ColumnsType<DataType> = [
+const columns: ProColumns<DataType>[] = [
   {
     title: 'name',
     dataIndex: 'name',
     key: 'name',
-    render: (text) => <a>{text}</a>,
+    render: (text: any) => <a>{text}</a>,
+    align: 'center'
   },
   {
     title: 'location',
     dataIndex: 'location',
     key: 'location',
+    align: 'center'
   },
   {
     title: 'size',
     dataIndex: 'size',
     key: 'size',
+    align: 'center'
   },
   {
     title: 'upload time',
     key: 'uploadTime',
     dataIndex: 'uploadTime',
+    valueType: "date",
+    align: 'center'
   },
   {
     title: 'Action',
     key: 'action',
-    render: (_, record) => (
+    render: (_, record: any) => (
       <Space size="middle">
-        <a>Invite {record.name}</a>
-        <a>Delete1</a>
+        <a>Download</a>
+        <a>Delete</a>
       </Space>
     ),
+    align: 'center'
   },
 ];
-
 const data: DataType[] = [
   {
     key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
+    name: 'samplefile1.txt',
+    location: "Victoria",
+    size: 1,
+    uploadTime: new Date(),
   },
   {
     key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
+    name: 'samplefile2.txt',
+    location: "Victoria",
+    size: 2.0,
+    uploadTime: new Date(),
   },
   {
     key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
+    name: 'samplefile3.txt',
+    location: "Vancouver",
+    size: 3.555,
+    uploadTime: new Date(),
   },
 ];
 
-const App: React.FC = () => <Table columns={columns} dataSource={data}/>;
+const App: React.FC = () => {
+  return <ProTable headerTitle="All Files" columns={columns} dataSource={data} search={false}/>;
+};
 
 export default App;
