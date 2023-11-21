@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Slf4j
 public class MainController {
     // 将注册页映射到静态资源下。
-    @GetMapping()
+    @GetMapping({"/test"})
     public String mapping() {
         return "index";
     }

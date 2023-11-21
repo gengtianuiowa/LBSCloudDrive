@@ -18,4 +18,11 @@ export default defineConfig({
     require("postcss-import"),
     require("tailwindcss")({ config: "./tailwind.config.js" }),
   ],
+  proxy: {
+    "/api": {
+      // 标识需要进行转换的请求的url
+      target: "http://localhost:8080", // 服务端域名
+      changeOrigin: true, // 允许域名进行转换
+    },
+  },
 });

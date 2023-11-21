@@ -3,12 +3,18 @@ import { InboxOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
 import { message, Typography, Upload } from 'antd';
 import UploadTitle from "@/components/uploadFiles/UploadTitle";
+import axios from "axios";
 
 const { Dragger } = Upload;
 const props: UploadProps = {
   name: 'file',
   multiple: true,
-  action: 'https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188',
+  action: async (file) => {
+    console.log(file.name);
+    let res = await axios.post("/api/upload", { name: file.name });
+    return "success";
+  },
+  method: "POST",
   onChange(info) {
     const { status } = info.file;
     if (status !== 'uploading') {

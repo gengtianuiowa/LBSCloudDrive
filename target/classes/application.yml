@@ -1,5 +1,5 @@
 server:
-#  port: 8080
+  #  port: 8080
   port: 443
   ssl: # ssl相关配置
     enabled: true
@@ -17,3 +17,6 @@ spring:
   thymeleaf:
     suffix: .html
     prefix: classpath:/public/
+
+filePath: /Users/alextian/work/test
+csvPath: /Users/alextian/work/iot/files.csv
