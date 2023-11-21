@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qta.be.dao.mapper.PaymentsMapper">
+    <insert id="insertPayment">
+        INSERT INTO payments(orderId, userId, itemName, amount, serviceProvider, status)
+        VALUES (#{orderId}, #{userId}, #{itemName}, #{amount}, #{serviceProvider}, #{status})
+    </insert>
+    <select id="selectByOrderId" resultType="com.qta.be.dao.domain.Payment">
+        SELECT *
+        FROM payments
+        WHERE orderId = #{orderId}
+    </select>
+    <update id="updateStatusById">
+        UPDATE payments
+        SET status = #{status}
+        WHERE id = #{id}
+    </update>
+    <select id="selectByUserId" resultType="com.qta.be.dao.domain.Payment">
+        SELECT *
+        FROM payments
+        WHERE userId = #{userId}
+    </select>
+</mapper>

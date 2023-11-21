@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qta.be.dao.mapper.UserAccountMapper">
+    <select id="selectById" resultType="com.qta.be.dao.domain.UserAccount">
+        SELECT *
+        FROM user_accounts
+        WHERE id = #{id}
+    </select>
+
+    <select id="selectByIdForUpdate" resultType="com.qta.be.dao.domain.UserAccount">
+        SELECT *
+        FROM user_accounts
+        WHERE id = #{id} FOR
+        UPDATE
+    </select>
+
+    <select id="selectByEmail" resultType="com.qta.be.dao.domain.UserAccount">
+        SELECT *
+        FROM user_accounts
+        WHERE email = #{email}
+    </select>
+    <select id="selectByPhoneNum" resultType="com.qta.be.dao.domain.UserAccount">
+        SELECT *
+        FROM user_accounts
+        WHERE phoneNumber = #{phoneNumber}
+    </select>
+    <select id="selectByTestEmail" resultType="com.qta.be.dao.domain.UserAccount">
+        SELECT *
+        FROM user_accounts
+        WHERE email LIKE 'imtest%@gmail.com'
+    </select>
+
+    <select id="selectByPromotionCode" resultType="com.qta.be.dao.domain.UserAccount">
+        SELECT *
+        FROM user_accounts
+        WHERE promotionCode = #{promotionCode}
+    </select>
+    <update id="updateResentEmail">
+        UPDATE user_accounts
+        SET emailVeriTime = CURRENT_TIMESTAMP,
+            emailVeriCode = #{emailVeriCode}
+        WHERE id = #{id}
+    </update>
+    <update id="updateResentPhone">
+        UPDATE user_accounts
+        SET phoneVeriTime = CURRENT_TIMESTAMP,
+            phoneVeriCode = #{phoneVeriCode}
+        WHERE id = #{id}
+    </update>
+
+    <insert id="insertEmailCode">
+        INSERT INTO user_accounts(email, status, emailVeriCode, emailVeriTime)
+        VALUES (#{email}, #{status}, #{emailVeriCode}, CURRENT_TIMESTAMP)
+    </insert>
+    <insert id="insertPhoneCode">
+        INSERT INTO user_accounts(phoneNumber, status, phoneVeriCode, phoneVeriTime)
+        VALUES (#{phoneNumber}, #{status}, #{phoneVeriCode}, CURRENT_TIMESTAMP)
+    </insert>
+    <update id="updateEmailRegistration">
+        UPDATE user_accounts
+        SET status        = #{status},
+            password      = #{password},
+            invitedByCode = #{invitedByCode},
+            name          = #{name}
+        WHERE id = #{id}
+    </update>
+    <update id="updatePhoneRegistration">
+        UPDATE user_accounts
+        SET status        = #{status},
+            invitedByCode = #{invitedByCode},
+            name = #{name}
+        WHERE id = #{id}
+    </update>
+    <update id="updatePasswordById">
+        UPDATE user_accounts
+        SET password = #{password}
+        WHERE id = #{id}
+    </update>
+    <update id="updateLoginTime">
+        UPDATE user_accounts
+        SET lastLoginTime = CURRENT_TIMESTAMP
+        WHERE id = #{id}
+    </update>
+    <update id="updateCreditById">
+        UPDATE user_accounts
+        SET credit = #{credit}
+        WHERE id = #{id}
+    </update>
+    <update id="updatePromotionCodeById">
+        UPDATE user_accounts
+        SET promotionCode = #{promotionCode}
+        WHERE id = #{id}
+    </update>
+    <select id="selectInvitedByCode" resultType="com.qta.be.dao.domain.UserAccount">
+        SELECT *
+        FROM user_accounts
+        WHERE invitedByCode = #{invitedByCode}
+    </select>
+    <update id="updateEmailById">
+        UPDATE user_accounts
+        SET email = #{email}
+        WHERE id = #{id}
+    </update>
+    <update id="updatePhoneNumberById">
+        UPDATE user_accounts
+        SET phoneNumber = #{phoneNumber}
+        WHERE id = #{id}
+    </update>
+    <delete id="deleteById">
+        DELETE
+        FROM user_accounts
+        WHERE id = #{id}
+    </delete>
+    <update id="updateNameById">
+        UPDATE user_accounts
+        SET name = #{name}
+        WHERE id = #{id}
+    </update>
+</mapper>

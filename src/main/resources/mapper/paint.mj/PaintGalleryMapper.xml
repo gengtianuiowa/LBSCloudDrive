@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qta.be.dao.mapper.paint.mj.PaintGalleryMapper">
+
+    <resultMap type="com.qta.be.dao.domain.paint.mj.PaintGallery" id="PaintGalleryMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="mjTaskId" column="mjTaskId" jdbcType="INTEGER"/>
+        <result property="addTime" column="addTime" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <resultMap type="com.qta.be.dao.domain.paint.mj.PaintGallery" id="PaintGalleryMapJointSearch">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="mjTaskId" column="mjTaskId" jdbcType="INTEGER"/>
+        <result property="addTime" column="addTime" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
+        <result property="prompt" column="prompt" jdbcType="VARCHAR"/>
+        <result property="userName" column="name" jdbcType="VARCHAR"/>
+        <result property="url" column="imageUrl" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="PaintGalleryMap">
+        select id,
+               mjTaskId,
+               addTime,
+               updateTime
+        from paint_gallery
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="PaintGalleryMap">
+        select
+        id, mjTaskId, addTime, updateTime
+        from paint_gallery
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="mjTaskId != null">
+                and mjTaskId = #{mjtaskid}
+            </if>
+            <if test="addTime != null">
+                and addTime = #{addtime}
+            </if>
+            <if test="updateTime != null">
+                and updateTime = #{updatetime}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <select id="queryGallery" resultMap="PaintGalleryMapJointSearch">
+        select tmp1.id,
+               tmp1.mjTaskId,
+               tmp1.addTime,
+               tmp1.updateTime,
+               tmp2.imageUrl,
+               tmp2.prompt,
+               ua.name
+        from paint_gallery as tmp1
+                 left join mj_task as tmp2 on tmp1.mjTaskId = tmp2.id
+                 left join user_accounts ua on tmp2.userId = ua.id
+        order by addTime DESC
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from paint_gallery
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="mjtaskid != null">
+                and mjTaskId = #{mjtaskid}
+            </if>
+            <if test="addtime != null">
+                and addTime = #{addtime}
+            </if>
+            <if test="updatetime != null">
+                and updateTime = #{updatetime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into paint_gallery(mjTaskId)
+        values (#{mjtaskid})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into paint_gallery(mjTaskId, addTime, updateTime)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.mjtaskid}, #{entity.addtime}, #{entity.updatetime})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into paint_gallery(mjTaskId, addTime, updateTime)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.mjtaskid}, #{entity.addtime}, #{entity.updatetime})
+        </foreach>
+        on duplicate key update
+        mjTaskId = values(mjTaskId),
+        addTime = values(addTime),
+        updateTime = values(updateTime)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update paint_gallery
+        <set>
+            <if test="mjtaskid != null">
+                mjTaskId = #{mjtaskid},
+            </if>
+            <if test="addtime != null">
+                addTime = #{addtime},
+            </if>
+            <if test="updatetime != null">
+                updateTime = #{updatetime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from paint_gallery
+        where id = #{id}
+    </delete>
+
+</mapper>
+

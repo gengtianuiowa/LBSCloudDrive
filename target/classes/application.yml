@@ -1,0 +1,19 @@
+server:
+#  port: 8080
+  port: 443
+  ssl: # ssl相关配置
+    enabled: true
+    key-store: classpath:alextian.net.jks
+    key-store-password: 3k7l1sw083848m1
+    key-store-type: JKS
+logging:
+  level:
+    com.qta.be.dao.mapper: DEBUG
+spring:
+  profiles:
+    active: dev
+  resources:
+    static-locations: classpath:public
+  thymeleaf:
+    suffix: .html
+    prefix: classpath:/public/

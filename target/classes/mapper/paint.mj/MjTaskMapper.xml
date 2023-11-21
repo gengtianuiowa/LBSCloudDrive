@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qta.be.dao.mapper.paint.mj.MjTaskMapper">
+    <insert id="insertByTaskId">
+        INSERT INTO mj_task (userId, taskId, type, indexNum, status, prompt, originalPrompt)
+        VALUES (#{userId}, #{taskId}, #{type}, #{index}, #{status}, #{prompt}, #{originalPrompt})
+    </insert>
+    <select id="selectAllByUserId" resultType="com.qta.be.dao.domain.paint.mj.MjTask">
+        SELECT *
+        FROM mj_task
+        WHERE userId = #{userId}
+        ORDER BY addTime DESC
+    </select>
+    <select id="selectByTaskId" resultType="com.qta.be.dao.domain.paint.mj.MjTask">
+        SELECT *
+        FROM mj_task
+        WHERE taskId = #{taskId}
+    </select>
+    <select id="selectInitTaskCount" resultType="java.lang.Integer">
+        SELECT count(1)
+        FROM mj_task
+        WHERE userId = #{userId}
+          AND status = 'INIT'
+          AND addTime >= DATE_SUB(NOW(), INTERVAL 24 HOUR)
+    </select><update id="updateStatusById">
+        UPDATE mj_task
+        SET status     = #{status},
+            failReason = #{failReason},
+            prompt=#{enPrompt}
+        WHERE taskId = #{taskId}
+    </update>
+    <update id="updateStatusURLById">
+        UPDATE mj_task
+        SET status   = #{status},
+            imageUrl = #{url},
+            prompt=#{enPrompt}
+        WHERE taskId = #{taskId}
+    </update>
+</mapper>
