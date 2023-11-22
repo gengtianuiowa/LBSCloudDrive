@@ -30,9 +30,9 @@ class UploadControllerTest {
     @Test
     public void testParsing() {
         String path = "/Users/alextian/work/iot/files.csv";
-        csvHelper.readCSV(path);
+        csvHelper.readCSV();
         csvHelper.writeCSV(path, new String[]{"1", "2", "3", "4"});
-        csvHelper.readCSV(path);
+        csvHelper.readCSV();
         Assertions.assertTrue(true);
     }
 

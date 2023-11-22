@@ -4,8 +4,9 @@ import lombok.Data;
 
 @Data
 public class WebFile {
+    private String id;
     private String name;
     private String location;
-    private float size;
+    private String size;
     private String uploadTime;
 }

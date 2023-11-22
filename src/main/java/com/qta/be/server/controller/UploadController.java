@@ -16,6 +16,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Date;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
@@ -32,19 +34,22 @@ public class UploadController {
 
     @PostMapping(value = "/upload")
     public Response<String> uploadFile(@RequestBody UploadFileReq req, HttpServletRequest request) {
-        String[] newRecord = new String[4];
-        newRecord[0] = req.getName();
+        String[] newRecord = new String[5];
+        newRecord[0] = UUID.randomUUID().toString();
+        newRecord[1] = req.getName();
         Path file = Paths.get(filePath + "/" + req.getName());
         BasicFileAttributes attr = null;
         try {
             attr = Files.readAttributes(file, BasicFileAttributes.class);
-            System.out.println(attr.lastModifiedTime().toMillis());
-            newRecord[1] = geoLocationHelper.getCity("96.54.49.225");
-            newRecord[2] = Long.toString(attr.lastModifiedTime().toMillis());
+            System.out.println(new Date(attr.lastModifiedTime().toMillis()).getTime() / 1000);
+            newRecord[2] = geoLocationHelper.getCity("96.54.49.225");
+            newRecord[3] = Long.toString(attr.size());
+            newRecord[4] = new Date(attr.lastModifiedTime().toMillis()).toString();
         } catch (Exception e) {
             log.error("Read file meta data error!", e);
         }
         csvHelper.writeCSV(csvPath, newRecord);
         return AjaxHelper.succeed(newRecord[2]);
     }
+
 }
