@@ -62,7 +62,7 @@ class UploadControllerTest {
         Assertions.assertEquals(city, "Vancouver");
     }
 
-    // IP search test3
+    // Test File Browser
     @Test
     public void testFileBrowser() throws Exception {
         Response<List<WebFile>> allFiles = fileBrowserController.getAllFiles();
@@ -74,7 +74,7 @@ class UploadControllerTest {
         Assertions.assertTrue(true);
     }
 
-    // Get All Files
+    // Test Delete File
     @Test
     public void testDeleteFile() throws Exception {
         Response<Integer> integerResponse = fileBrowserController.deleteFile("76fd934e-9408-4d32-b433-2ad171ccc5c0");
