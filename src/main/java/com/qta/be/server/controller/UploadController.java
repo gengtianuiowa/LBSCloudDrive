@@ -42,7 +42,8 @@ public class UploadController {
         try {
             attr = Files.readAttributes(file, BasicFileAttributes.class);
             System.out.println(new Date(attr.lastModifiedTime().toMillis()).getTime() / 1000);
-            newRecord[2] = geoLocationHelper.getCity("96.54.49.225");
+            newRecord[2] = geoLocationHelper.getCity(request.getRemoteAddr());
+//            newRecord[2] = geoLocationHelper.getCity("96.54.49.225");
             newRecord[3] = Long.toString(attr.size());
             newRecord[4] = new Date(attr.lastModifiedTime().toMillis()).toString();
         } catch (Exception e) {
