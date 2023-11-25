@@ -13,6 +13,7 @@ export default defineConfig({
     "@umijs/plugins/dist/react-query",
     "@umijs/plugins/dist/dva",
     "@umijs/plugins/dist/tailwindcss",
+    '@umijs/plugins/dist/locale'
   ],
   extraPostCSSPlugins: [
     require("postcss-import"),
@@ -24,5 +25,9 @@ export default defineConfig({
       target: "http://localhost:8080", // 服务端域名
       changeOrigin: true, // 允许域名进行转换
     },
+  },
+  locale: {
+    default: 'en-US',
+    baseSeparator: '-',
   },
 });
